@@ -16,25 +16,21 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@PrimaryKeyJoinColumn
 	private long user_id;
 	private String name;
 	private String email;
 	private String password;
-	private String profile_pic;
 	
-	@OneToOne(cascade = CascadeType.REMOVE)
-	@JoinColumn(name="role_id")
-	private Role role;
-	
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
-
+	/*
+	 * @OneToOne(cascade = CascadeType.ALL)
+	 * 
+	 * @JoinColumn(name="role_id") private Role role;
+	 */
+	/*
+	 * public Role getRole() { return role; }
+	 * 
+	 * public void setRole(Role role) { this.role = role; }
+	 */
 	
 
 	public long getUser_id() {
@@ -67,14 +63,6 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getProfile_pic() {
-		return profile_pic;
-	}
-
-	public void setProfile_pic(String profile_pic) {
-		this.profile_pic = profile_pic;
 	}
 
 }
