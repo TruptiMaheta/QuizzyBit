@@ -1,0 +1,21 @@
+package com.util;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class TokenGenerator {
+	public static String generateToken()
+	{
+		StringBuffer sb = new StringBuffer("");
+		String source = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
+		int index = 0;
+		for (int i = 1; i <= 16; i++) {
+			index = (int) (Math.random() * source.length());
+//			System.out.println(index);
+
+			sb.append(source.charAt(index));
+		}
+
+		return sb.toString();
+	}
+}

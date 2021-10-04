@@ -20,6 +20,7 @@ public class User {
 	private String name;
 	private String email;
 	private String password;
+	private String token;
 	
 	/*
 	 * @OneToOne(cascade = CascadeType.ALL)
@@ -65,4 +66,12 @@ public class User {
 		this.password = password;
 	}
 
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+	
 }

@@ -16,9 +16,13 @@ public class UserService {
 	{
 		service.save(user);
 	}
-	
 	public List<User> get()
 	{
 		return service.findAll();
 	}
+	
+	/*
+	 * public User updateToken(long l,String token) { return service.save(l,token);
+	 * }
+	 */
 }
