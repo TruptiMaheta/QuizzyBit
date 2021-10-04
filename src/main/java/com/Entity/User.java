@@ -1,11 +1,16 @@
 package com.Entity;
 
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -23,19 +28,30 @@ public class User {
 	private String password;
 	private String profile_pic;
 	
-	@OneToOne(cascade = CascadeType.REMOVE)
-	@JoinColumn(name="role_id")
-	private Role role;
-	
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
 
 	
+	 @OneToMany(mappedBy="user",cascade = CascadeType.ALL)
+	 private Set<QuizCategory> quizCategories;
+
+	 @OneToMany(mappedBy="user",cascade = CascadeType.ALL)
+	 private Set<QuizSubCategory> quizSubCategories;
+	 
+	
+	public Set<QuizSubCategory> getQuizSubCategories() {
+		return quizSubCategories;
+	}
+
+	public void setQuizSubCategories(Set<QuizSubCategory> quizSubCategories) {
+		this.quizSubCategories = quizSubCategories;
+	}
+
+	public Set<QuizCategory> getQuizCategories() {
+		return quizCategories;
+	}
+
+	public void setQuizCategories(Set<QuizCategory> quizCategories) {
+		this.quizCategories = quizCategories;
+	}
 
 	public long getUser_id() {
 		return user_id;
@@ -76,5 +92,23 @@ public class User {
 	public void setProfile_pic(String profile_pic) {
 		this.profile_pic = profile_pic;
 	}
+	
+	
+	@OneToOne(cascade =CascadeType.ALL)
+	@JoinColumn(name="role_id")
+	private Role role;
+
+
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	@ManyToMany(mappedBy="quizUser")
+	private List<Quiz>quiz;
 
 }
