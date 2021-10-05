@@ -1,32 +1,83 @@
 package com.Entity;
 
+import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "users")
-public class User {
+public class User{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@PrimaryKeyJoinColumn
-	private long user_id;
+	private long userId;
 	private String name;
 	private String email;
 	private String password;
 	private String profile_pic;
-	
-	@OneToOne(cascade = CascadeType.REMOVE)
-	@JoinColumn(name="role_id")
+	private String token;
+
+	@ManyToOne()
+	@JoinColumn(name = "role_id")
 	private Role role;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private Set<QuizCategory> quizCategories;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private Set<QuizSubCategory> quizSubCategories;
+
+	@ManyToMany(mappedBy = "quizUser")
+	private List<Quiz> quiz;
 	
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public List<Quiz> getQuiz() {
+		return quiz;
+	}
+
+	public void setQuiz(List<Quiz> quiz) {
+		this.quiz = quiz;
+	}
+
+	public Set<QuizSubCategory> getQuizSubCategories() {
+		return quizSubCategories;
+	}
+
+	public void setQuizSubCategories(Set<QuizSubCategory> quizSubCategories) {
+		this.quizSubCategories = quizSubCategories;
+	}
+
+	public Set<QuizCategory> getQuizCategories() {
+		return quizCategories;
+	}
+
+	public void setQuizCategories(Set<QuizCategory> quizCategories) {
+		this.quizCategories = quizCategories;
+	}
+
 	public Role getRole() {
 		return role;
 	}
@@ -35,14 +86,12 @@ public class User {
 		this.role = role;
 	}
 
-	
-
-	public long getUser_id() {
-		return user_id;
+	public long getUserId() {
+		return userId;
 	}
 
-	public void setUser_id(long user_id) {
-		this.user_id = user_id;
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 
 	public String getName() {
