@@ -1,11 +1,14 @@
 package com.Entity;
 
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -16,13 +19,13 @@ public class Role {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
+	@PrimaryKeyJoinColumn
 	private long role_id;
 	private String role_name;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "role",cascade = CascadeType.ALL)
 	//@PrimaryKeyJoinColumn
-	private User user;
+	private Set<User> user;
 
 
 	public long getRole_id() {
@@ -40,5 +43,5 @@ public class Role {
 	public void setRole_name(String role_name) {
 		this.role_name = role_name;
 	}
-
+	
 }

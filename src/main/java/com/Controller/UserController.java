@@ -31,13 +31,14 @@ public class UserController {
 	
 	
 	@PostMapping("/addUser")
-	public ResponseBean<User> addUser(@RequestBody User user)
+	public ResponseBean<User> addUser(@RequestBody User user2)
 	{
 		ResponseBean<User> res=new ResponseBean<>();
-		service.save(user);
+		service.save(user2);
 		res.setStatus(200);
-		res.setData(user);
+		res.setData(user2);
 		res.setMessage("user save");
+		//System.out.println(user2.getRole().getRole_id());
 		return res;
 	}
 	
@@ -86,8 +87,10 @@ public class UserController {
 		}
 		else
 		{
-			
+			res.setData(user1);
+			res.setMessage("User is get");
 		}
+		return res;
 	}
 
 }

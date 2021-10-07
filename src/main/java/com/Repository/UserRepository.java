@@ -9,8 +9,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import
  org.springframework.stereotype.Repository;
- 
- import com.Entity.User;
+
+import com.Entity.Role;
+import com.Entity.User;
  
  @Repository
  public interface UserRepository extends JpaRepository<User,
@@ -24,6 +25,15 @@ import
 	@Query("update User set token= :token where user_id = :user_id")
 	public void update(@Param("user_id") Long id,@Param("token") String token);
 	
-	public User findByEmail(String email);
+	public User findByEmail(String email);	
+	
+	/*
+	 * @Modifying
+	 * 
+	 * @Transactional
+	 * 
+	 * @Query("insert into User(user_id,name,email,password,role) values(:user_id,:name,:email,:password,:role)"
+	 * ) public void insert();
+	 */
 	
  }
