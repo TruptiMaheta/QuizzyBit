@@ -1,5 +1,6 @@
 package com.Entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -14,22 +15,25 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "quiz_Category")
-public class QuizCategory {
+public class QuizCategory implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long quizCatId;
 	private String quizCatName;
 
-	@OneToOne(targetEntity = User.class, cascade = CascadeType.ALL)
-	@JoinColumn(name = "UserId")
+	
+	@OneToOne(cascade = { CascadeType.MERGE,CascadeType.DETACH})
+	@JoinColumn(name = "userId")
 	private User user;
-
+	@JsonIgnore
 	@OneToMany(mappedBy = "que_cat_id", cascade = CascadeType.ALL)
 	private List<Quiz> quiz;
-
+	@JsonIgnore
 	@OneToMany(mappedBy = "que_cat_id", cascade = CascadeType.ALL)
 	private List<Questions> questions;
 

@@ -21,4 +21,12 @@ public class UserService {
 	public List<User> get() {
 		return service.findAll();
 	}
+
+	public long delete(Long userId) {
+		
+		service.deleteById(userId);
+		return userId;
+		// TODO Auto-generated method stub
+	
+	}
 }

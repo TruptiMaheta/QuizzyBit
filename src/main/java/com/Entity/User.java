@@ -17,11 +17,10 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "users")
-public class User{
+public class User implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,14 +29,15 @@ public class User{
 	private String name;
 	private String email;
 	private String password;
-	private String profile_pic;
+	
 	private String token;
 
 	@ManyToOne()
 	@JoinColumn(name = "role_id")
 	private Role role;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	@JsonIgnore
+	@OneToMany(targetEntity=com.Entity.QuizCategory.class,mappedBy = "user", cascade = CascadeType.ALL,orphanRemoval=true)
 	private Set<QuizCategory> quizCategories;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -118,12 +118,6 @@ public class User{
 		this.password = password;
 	}
 
-	public String getProfile_pic() {
-		return profile_pic;
-	}
-
-	public void setProfile_pic(String profile_pic) {
-		this.profile_pic = profile_pic;
-	}
+	
 
 }

@@ -1,7 +1,6 @@
 package com.Controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -10,12 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.Entity.Role;
 import com.Entity.User;
-import com.Repository.RoleRepository;
 import com.Repository.UserRepository;
 import com.Services.UserService;
 import com.bean.LoginBean;
@@ -78,6 +74,50 @@ public class UserController {
 		}
 		return res;
 	}
+	@DeleteMapping("/users/{userId}")
+	public ResponseBean<User> deleteCustomerById(@PathVariable("userId") Long userId) {
+
+		ResponseBean<User> res = new ResponseBean<>();
+
+		Long product = service.delete(userId);
+
+		if (product == null) {
+			res.setData(null);
+			res.setMessage("Invalid User Id");
+			res.setStatus(-1);
+		} else {
+			//res.setData(product);
+			res.setMessage("User Removed");
+			res.setStatus(200);
+		}
+		return res;
+	}
+//	
+//	@PutMapping("/userUpdateById/{userId}")
+//	public  ResponseBean<User
+	
+	
+	
+	@GetMapping("/getuserId/{token}")
+	public ResponseBean<Long>getUserIdByToken(@PathVariable("token") String token)
+	{
+		ResponseBean res=new ResponseBean();
+		Long userid=user.findByToken(token).getUserId();
+		if (userid == null) {
+			res.setData(null);
+			res.setMessage("Invalid token");
+			res.setStatus(-1);
+		} else {
+			res.setData(userid);
+			res.setMessage("UserId get sucessfully token ");
+			res.setStatus(200);
+		}
+		return res;
+	}	
+	
+	
 
 }
+
+
 
